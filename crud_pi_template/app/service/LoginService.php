@@ -6,7 +6,7 @@ require_once(__DIR__ . "/../model/Usuario.php");
 
 class LoginService {
 
-    public function validarCampos(string $login, string $senha) {
+    public function validarCampos(?string $login, ?string $senha) {
         $arrayMsg = array();
 
         //Valida o campo nome

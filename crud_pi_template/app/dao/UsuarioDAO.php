@@ -46,16 +46,20 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM usuarios u" .
-               " WHERE u.login = ? AND u.senha = ?";
+               " WHERE BINARY u.login = ?";
         $stm = $conn->prepare($sql);    
-        $stm->execute([$login, $senha]);
+        $stm->execute([$login]);
         $result = $stm->fetchAll();
 
         $usuarios = $this->mapUsuarios($result);
 
-        if(count($usuarios) == 1)
-            return $usuarios[0];
-        elseif(count($usuarios) == 0)
+        if(count($usuarios) == 1) {
+            //Tratamento para senha criptografada
+            if(password_verify($senha, $usuarios[0]->getSenha()))
+                return $usuarios[0];
+            else
+                return null;
+        } elseif(count($usuarios) == 0)
             return null;
 
         die("UsuarioDAO.findByLoginSenha()" . 
@@ -66,14 +70,14 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO usuarios (nome_usuario, login, senha, papeis)" .
-               " VALUES (:nome, :login, :senha, :papeis)";
+        $sql = "INSERT INTO usuarios (nome_usuario, login, senha, papel)" .
+               " VALUES (:nome, :login, :senha, :papel)";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("login", $usuario->getLogin());
         $stm->bindValue("senha", $usuario->getSenha());
-        $stm->bindValue("papeis", $usuario->getPapel());
+        $stm->bindValue("papel", $usuario->getPapel());
         $stm->execute();
     }
 
@@ -82,14 +86,14 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "UPDATE usuarios SET nome_usuario = :nome, login = :login," . 
-               " senha = :senha, papeis = :papeis" .   
+               " senha = :senha, papel = :papel" .   
                " WHERE id_usuario = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("login", $usuario->getLogin());
         $stm->bindValue("senha", $usuario->getSenha());
-        $stm->bindValue("papeis", $usuario->getPapel());
+        $stm->bindValue("papel", $usuario->getPapel());
         $stm->bindValue("id", $usuario->getId());
         $stm->execute();
     }
@@ -114,7 +118,7 @@ class UsuarioDAO {
             $usuario->setNome($reg['nome_usuario']);
             $usuario->setLogin($reg['login']);
             $usuario->setSenha($reg['senha']);
-            $usuario->setPapel($reg['papeis']);
+            $usuario->setPapel($reg['papel']);
             array_push($usuarios, $usuario);
         }
 
