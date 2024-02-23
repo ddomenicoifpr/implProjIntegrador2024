@@ -79,6 +79,28 @@ class UsuarioController extends Controller {
         $this->loadView("usuario/form.php", $dados, $msgsErro);
     }
 
+    //Método create
+    protected function create() {
+        //echo "Chamou o método create!";
+
+        $dados["id"] = 0;
+        $dados["papeis"] = UsuarioPapel::getAllAsArray(); 
+        $this->loadView("usuario/form.php", $dados);
+    }
+
+    //Método edit
+    protected function edit() {
+        $usuario = $this->findUsuarioById();
+        $usuario->setSenha("");
+        
+        //Setar os dados
+        $dados["id"] = $usuario->getId();
+        $dados["usuario"] = $usuario;
+        $dados["papeis"] = UsuarioPapel::getAllAsArray(); 
+
+        $this->loadView("usuario/form.php", $dados);
+    }
+
     //Método para buscar o usuário com base no ID recebido por parâmetro GET
     private function findUsuarioById() {
         $id = 0;
