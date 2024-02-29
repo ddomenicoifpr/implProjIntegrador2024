@@ -76,7 +76,8 @@ class UsuarioDAO {
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("login", $usuario->getLogin());
-        $stm->bindValue("senha", $usuario->getSenha());
+        $senhaCript = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
+        $stm->bindValue("senha", $senhaCript);
         $stm->bindValue("papel", $usuario->getPapel());
         $stm->execute();
     }
@@ -92,7 +93,8 @@ class UsuarioDAO {
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("login", $usuario->getLogin());
-        $stm->bindValue("senha", $usuario->getSenha());
+        $senhaCript = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
+        $stm->bindValue("senha", $senhaCript);
         $stm->bindValue("papel", $usuario->getPapel());
         $stm->bindValue("id", $usuario->getId());
         $stm->execute();

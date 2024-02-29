@@ -2,6 +2,8 @@
 #Nome do arquivo: config.php
 #Objetivo: define constantes para serem utilizadas no projeto
 
+
+
 //Banco de dados: conexão MySQL
 define('DB_HOST', 'mysql-server');
 define('DB_NAME', 'proj_integrador');

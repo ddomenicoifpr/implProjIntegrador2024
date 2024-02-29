@@ -27,7 +27,7 @@ class UsuarioController extends Controller {
         //print_r($usuarios);
         $dados["lista"] = $usuarios;
 
-        $this->loadView("usuario/list.php", $dados,  $msgErro, $msgSucesso);
+        $this->loadView("usuario/list.php", $dados, $msgErro, $msgSucesso);
     }
 
     protected function save() {
@@ -91,14 +91,32 @@ class UsuarioController extends Controller {
     //Método edit
     protected function edit() {
         $usuario = $this->findUsuarioById();
-        $usuario->setSenha("");
         
-        //Setar os dados
-        $dados["id"] = $usuario->getId();
-        $dados["usuario"] = $usuario;
-        $dados["papeis"] = UsuarioPapel::getAllAsArray(); 
+        if($usuario) {
+            $usuario->setSenha("");
+            
+            //Setar os dados
+            $dados["id"] = $usuario->getId();
+            $dados["usuario"] = $usuario;
+            $dados["papeis"] = UsuarioPapel::getAllAsArray(); 
 
-        $this->loadView("usuario/form.php", $dados);
+            $this->loadView("usuario/form.php", $dados);
+        } else 
+            $this->list("Usuário não encontrado");
+    }
+
+    //Método para excluir
+    protected function delete() {
+        $usuario = $this->findUsuarioById();
+        if($usuario) {
+            //Excluir
+            $this->usuarioDao->deleteById($usuario->getId());
+            $this->list("", "Usuário excluído com sucesso!");
+        } else {
+            //Mensagem q não encontrou o usuário
+            $this->list("Usuário não encontrado!");
+
+        }               
     }
 
     //Método para buscar o usuário com base no ID recebido por parâmetro GET
