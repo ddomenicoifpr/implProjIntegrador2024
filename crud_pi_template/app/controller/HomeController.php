@@ -14,7 +14,8 @@ class HomeController extends Controller {
     }
 
     protected function home() {
-        echo "Executou a action home!";
+        $dados = array();
+        $this->loadView("home/home.php", $dados);
     }
 
 }
