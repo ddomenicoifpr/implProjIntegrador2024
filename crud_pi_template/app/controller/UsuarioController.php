@@ -119,6 +119,12 @@ class UsuarioController extends Controller {
         }               
     }
 
+    protected function listJson() {
+        $listaUsuarios = $this->usuarioDao->list();
+        $json = json_encode($listaUsuarios);
+        echo $json;
+    }
+
     //Método para buscar o usuário com base no ID recebido por parâmetro GET
     private function findUsuarioById() {
         $id = 0;

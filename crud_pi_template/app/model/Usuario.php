@@ -4,13 +4,20 @@
 
 require_once(__DIR__ . "/enum/UsuarioPapel.php");
 
-class Usuario {
+class Usuario implements JsonSerializable {
 
     private ?int $id;
     private ?string $nome;
     private ?string $login;
     private ?string $senha;
     private ?string $papel;
+
+    public function jsonSerialize(): array {
+        return array("id" => $this->id,
+                     "nome" => $this->nome,
+                     "login" => $this->login,
+                     "papel" => $this->papel);
+    }
 
     public function getId(): ?int
     {

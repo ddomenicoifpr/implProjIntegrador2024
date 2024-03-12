@@ -111,6 +111,17 @@ class UsuarioDAO {
         $stm->execute();
     }
 
+    public function count() {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT COUNT(*) total FROM usuarios";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        $result = $stm->fetchAll();
+
+        return $result[0]["total"];
+    }
+
     //Método para converter um registro da base de dados em um objeto Usuario
     private function mapUsuarios($result) {
         $usuarios = array();
