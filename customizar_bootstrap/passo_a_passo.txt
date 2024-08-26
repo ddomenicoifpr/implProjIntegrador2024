@@ -1,0 +1,44 @@
+**** Passo a passo para customizar os estilos disponíveis no Bootstrap ****
+
+1- Fazer download dos arquivos de estilos no site do Bootstrap
+    https://getbootstrap.com.br/docs/4.1/getting-started/download/
+
+2- Adicionar os arquivos da pasta dist/css e disc/js no projeto que está sendo desenvolvido
+
+3- Alterar a inclusão do Bootstrap no projeto, referenciando os arquivos baixados
+    - 3.1 (header): 
+        Trocar:
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        Por:
+            <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+
+    - 3.2 (footer):     
+        Trocar:
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        Por:
+            <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+
+4- Opções de customização:
+    4.1- Criar um CSS extra no projeto, customizando as classes uma a uma:
+        Exemplo (trocar o botão para Azul para Violeta):
+            .btn-primary {
+                background-color: blueviolet;
+                border-color: blueviolet;
+            }
+        
+        Também é possível definir novas classe de cores, por exemplo:
+            .btn-customizado {
+                background-color: orange;
+                border-color: orange;
+            }
+
+
+    4.2- Utilizar um aplicativo para criar um novo bootstrap.css customizado
+        Exemplo: http://bootstrapcustomizer.compoutpost.com/
+            4.2.1 - Neste caso, aterar somente a cor das classes, como 'primary', 'secondary', 'success'...
+            4.2.2 - Atentar para a versão do bootstrap utilizado (no template do projeto integrador é a 4.1.3)
+            4.2.3 - Após preencher os campos com as cores, fazer download do arquivo bootstrap.css
+                - Depois disso, substituir o bootstrap.css que já existe no projeto pelo arquivo baixado
+
+
+
