@@ -60,4 +60,14 @@ class Controller {
         return true;
     }
 
+    protected function usuarioIsAdmin() {
+        //Habilitar o recurso de sessão no PHP nesta página
+        session_start();
+
+        if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioPapel::ADMINISTRADOR)
+            return true;
+
+        return false;
+    }
+
 }

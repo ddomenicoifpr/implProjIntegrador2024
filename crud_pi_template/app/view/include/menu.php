@@ -3,8 +3,11 @@
 #Objetivo: menu da aplicação para ser incluído em outras páginas
 
 $nome = "(Sessão expirada)";
-if(isset($_SESSION[SESSAO_USUARIO_NOME]))
+$papel = "";
+if(isset($_SESSION[SESSAO_USUARIO_NOME])) {
     $nome = $_SESSION[SESSAO_USUARIO_NOME];
+    $papel = $_SESSION[SESSAO_USUARIO_PAPEL];
+}
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
@@ -18,8 +21,10 @@ if(isset($_SESSION[SESSAO_USUARIO_NOME]))
                 role="button" data-toggle="dropdown" aria-haspopup="true" 
                 aria-expanded="false"> Cadastros </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" 
-                        href="<?= BASEURL . '/controller/UsuarioController.php?action=list' ?>">Usuários</a>
+                    <?php if($papel == UsuarioPapel::ADMINISTRADOR): ?>
+                        <a class="dropdown-item" 
+                            href="<?= BASEURL . '/controller/UsuarioController.php?action=list' ?>">Usuários</a>
+                    <?php endif; ?>
                     <a class="dropdown-item" href="#">Outro cadastro</a>
                 </div>
             </li>

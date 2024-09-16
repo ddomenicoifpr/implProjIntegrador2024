@@ -13,8 +13,15 @@ class UsuarioController extends Controller {
 
     //Método construtor do controller - será executado a cada requisição a está classe
     public function __construct() {
+        //Testar se o usuário está logado
         if(! $this->usuarioLogado())
             exit;
+
+        //Testar a permissão do usuário
+        if(! $this->usuarioIsAdmin()) {
+            echo "Acesso negado!";
+            exit;
+        }        
 
         $this->usuarioDao = new UsuarioDAO();
         $this->usuarioService = new UsuarioService();
